@@ -1,0 +1,29 @@
+<script>
+  // QA flag
+  var isQAReady = false; // Set this to true to load the production script everywhere
+
+  // Define the script sources for different domains
+  var productionScriptUrl = "";
+  var devScriptUrl = "";
+
+  var scriptUrl;
+
+  if (isQAReady) {
+    scriptUrl = productionScriptUrl;
+  } else if (/\.webflow\.io$/.test(window.location.hostname)) {
+    scriptUrl = devScriptUrl;
+  } else if (window.location.hostname === "point.com" || window.location.hostname === "www.point.dev") {
+    scriptUrl = productionScriptUrl;
+  } else {
+    // Default to production URL
+    scriptUrl = productionScriptUrl;
+  }
+
+  // Dynamically create a script element and set its source
+  var scriptElement = document.createElement("script");
+  scriptElement.defer = true; // Add the defer attribute
+  scriptElement.src = scriptUrl;
+
+  // Append the script element to the document's head (recommended for deferred scripts)
+  document.head.appendChild(scriptElement);
+</script>
